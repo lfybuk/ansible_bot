@@ -115,17 +115,9 @@ def get_phone_numbers_handler(update, context):
     else:
         update.message.reply_text('Список номеров телефонов пуст.')
 
-def get_repl_log(update: Update, context: CallbackContext) -> None:
-    try:
-        # Выполнение команды для получения логов с помощью ssh
-        log_command = "cat /tmp/pg.log | grep replica | tail -n 15"
-        result = ssh_exec_command(log_command)
-        if result:
-            update.message.reply_text(f"Последние репликационные логи:\n{result}")
-        else:
-            update.message.reply_text("Репликационные логи не найдены.")
-    except Exception as e:
-        update.message.reply_text(f"Ошибка при получении логов: {str(e)}")
+def get_repl_log(update, context):
+    output = ssh_exec_command("grep repl /tmp/pg.log")
+    update.message.reply_text(output)
 
 def find_email(update, context):
     user_states[update.message.chat_id] = 'email'
