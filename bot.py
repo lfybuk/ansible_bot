@@ -116,7 +116,7 @@ def get_phone_numbers_handler(update, context):
         update.message.reply_text('Список номеров телефонов пуст.')
 
 def get_repl_log(update, context):
-    output = ssh_exec_command('cat /var/log/postgresql/postgresql-14-main.log | grep repl')
+    output = ssh_exec_command('cat /var/log/postgresql/postgresql-14-main.log | grep repl | tail -n 15')
     update.message.reply_text(output)
 
 def find_email(update, context):
